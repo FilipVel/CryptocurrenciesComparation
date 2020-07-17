@@ -1,0 +1,1 @@
+Comparation of the cryptocurrencieses data structure 
