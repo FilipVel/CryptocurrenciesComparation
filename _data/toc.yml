@@ -26,6 +26,9 @@
   - title: Coins Traded
     url: /04Metrics/02CoinsTraded/coinsTraded
     not_numbered: true
+  - title: Active Addresses
+    url: /04Metrics/03ActiveAddresses/active
+    not_numbered: true
 
 # Divider for meta-pages and content page
 - divider: true
