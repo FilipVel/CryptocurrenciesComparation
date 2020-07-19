@@ -32,7 +32,9 @@
   - title: Total Number of Addresses
     url: /04Metrics/04TotalNumAdd/totadd
     not_numbered: true
-
+  - title: Combined Plot
+    url: /04Metrics/06CombinedPlot/combined
+    not_numbered: true
 # Divider for meta-pages and content page
 - divider: true
 
