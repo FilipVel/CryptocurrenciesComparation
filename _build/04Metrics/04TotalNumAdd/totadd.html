@@ -1,0 +1,243 @@
+---
+redirect_from:
+  - "/04metrics/04totalnumadd/totadd"
+interact_link: content/04Metrics/04TotalNumAdd/totadd.ipynb
+kernel_name: python3
+kernel_path: content/04Metrics/04TotalNumAdd
+has_widgets: false
+title: |-
+  Total Number of Addresses
+pagenum: 7
+prev_page:
+  url: /04Metrics/03ActiveAddresses/active.html
+next_page:
+  url: 
+suffix: .ipynb
+search: 
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Total Number of Addresses</div>
+</div>
+    <div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">bigquery</span>
+<span class="kn">from</span> <span class="nn">google.oauth2</span> <span class="kn">import</span> <span class="n">service_account</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">plotly.tools</span> <span class="k">as</span> <span class="nn">tls</span>
+
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">plot</span><span class="p">,</span> <span class="n">iplot</span><span class="p">,</span> <span class="n">init_notebook_mode</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">init_notebook_mode</span><span class="p">(</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;showLink&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;displayModeBar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-latest.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="n">service_account</span><span class="o">.</span><span class="n">Credentials</span><span class="o">.</span><span class="n">from_service_account_file</span><span class="p">(</span>
+    <span class="s1">&#39;cred.json&#39;</span><span class="p">)</span>
+<span class="n">project_id</span> <span class="o">=</span> <span class="s1">&#39;intricate-yew-283611&#39;</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">bigquery</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">credentials</span><span class="o">=</span> <span class="n">credentials</span><span class="p">,</span><span class="n">project</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">with cte as(SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_bitcoin.transactions`,UNNEST(outputs) as ins</span>
+<span class="s2"> </span>
+<span class="s2">UNION ALL</span>
+<span class="s2">SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_bitcoin.transactions`,UNNEST(inputs) as ins)</span>
+<span class="s2">select count(distinct(addresses))</span>
+<span class="s2">from cte</span>
+<span class="s2"> </span>
+<span class="s2"> &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">query_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="n">bitcoin_df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total number of Bitcoin addresses: &#39;</span><span class="p">,</span><span class="n">bitcoin_df</span><span class="p">[</span><span class="s1">&#39;f0_&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of Bitcoin addresses:  692643143
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">with cte as(SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_bitcoin_cash.transactions`,UNNEST(outputs) as ins</span>
+<span class="s2">WHERE Date(block_timestamp)&gt; &#39;2017-07-31&#39;</span>
+
+<span class="s2">UNION ALL</span>
+<span class="s2">SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_bitcoin_cash.transactions`,UNNEST(inputs) as ins</span>
+<span class="s2">WHERE Date(block_timestamp)&gt; &#39;2017-07-31&#39;)</span>
+<span class="s2">select count(distinct(addresses))</span>
+<span class="s2">from cte</span>
+<span class="s2"> </span>
+<span class="s2"> &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">query_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="n">bitcoin_df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total number of bitcoin cash addresses: &#39;</span><span class="p">,</span><span class="n">bitcoin_df</span><span class="p">[</span><span class="s1">&#39;f0_&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of bitcoin cash addresses:  40360252
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">query_job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">with cte as(SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_litecoin.transactions`,UNNEST(outputs) as ins</span>
+<span class="s2">UNION ALL</span>
+<span class="s2">SELECT  block_timestamp, ARRAY_TO_STRING(addresses, &#39;,&#39;) as addresses</span>
+<span class="s2">FROM `bigquery-public-data.crypto_litecoin.transactions`,UNNEST(inputs) as ins)</span>
+<span class="s2">select count(distinct(addresses))</span>
+<span class="s2">from cte</span>
+<span class="s2"> </span>
+<span class="s2"> &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">query_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="n">bitcoin_df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total number of Litecoin addresses: &#39;</span><span class="p">,</span><span class="n">bitcoin_df</span><span class="p">[</span><span class="s1">&#39;f0_&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of Litecoin addresses:  56462583
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
