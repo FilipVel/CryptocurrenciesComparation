@@ -29,7 +29,7 @@
   - title: Active Addresses
     url: /04Metrics/03ActiveAddresses/active
     not_numbered: true
-  - title: Total Number of Addresses
+  - title: Market Share
     url: /04Metrics/04TotalNumAdd/totadd
     not_numbered: true
   - title: Combined Plot
