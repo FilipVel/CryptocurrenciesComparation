@@ -1,10 +1,15 @@
 # Add a header and sample content section
 - header: Content
 
-- title: Introduction
+- title: 1. Introduction
   url: /01Introduction/introduction
   not_numbered: true
-  
+
+- title: 2. Blockchain Technology
+  url: /02BlockchainTechnology/bt
+  not_numbered: true
+
+
 - title: General Comparation  
   url: /02GeneralComparation/general
   not_numbered: true
