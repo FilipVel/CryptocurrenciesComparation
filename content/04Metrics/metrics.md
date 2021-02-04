@@ -1,1 +1,1 @@
-Description of the metrics being compared 
+The data presented in this document is obtained using Google's BigQuery cloud-based warehouse.

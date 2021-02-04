@@ -45,6 +45,10 @@
 
 - divider: true
 
+- title: References
+  url: /06References/references
+  not_numbered: true
+
 - title: Github Repository 
   url: https://github.com/FilipVel/CryptocurrenciesComparation
   external: true
