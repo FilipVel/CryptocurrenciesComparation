@@ -10,12 +10,8 @@
   not_numbered: true
 
 
-- title: General Comparation  
+- title: 3. Cryptocurrency Comparison  
   url: /02GeneralComparation/general
-  not_numbered: true
-
-- title: Data Structure Comparation  
-  url: /03DataStructureComparation/dataStruct
   not_numbered: true
 
 - divider: true
