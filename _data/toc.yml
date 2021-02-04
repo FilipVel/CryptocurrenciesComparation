@@ -14,29 +14,35 @@
   url: /02GeneralComparation/general
   not_numbered: true
 
-- divider: true
 # A chapter w/ a collection of sections beneath it
-- title: Metrics
+- title: 4. Metrics
   url: /04Metrics/metrics
   not_numbered: true
   expand_sections: true
   sections:
-  - title: Transactions
+  - title: 4.1 Transactions
     url: /04Metrics/01Transactions/transactions
     not_numbered: true
-  - title: Coins Traded
+  - title: 4.2 Coins Traded
     url: /04Metrics/02CoinsTraded/coinsTraded
     not_numbered: true
-  - title: Active Addresses
+  - title: 4.3 Active Addresses
     url: /04Metrics/03ActiveAddresses/active
     not_numbered: true
-  - title: Market Share
+  - title: 4.4 Market Share
     url: /04Metrics/04TotalNumAdd/totadd
     not_numbered: true
-  - title: Combined Plot
+  - title: 4.5 Combined Plot
     url: /04Metrics/06CombinedPlot/combined
     not_numbered: true
 # Divider for meta-pages and content page
+
+- title: 5. Conclusion
+  url: /05Content/content
+  not_numbered: true
+
+
+
 - divider: true
 
 - title: Github Repository 
