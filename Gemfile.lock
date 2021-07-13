@@ -6,7 +6,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.7.0)
+    addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     bibtex-ruby (4.4.7)
       latex-decode (~> 0.0)
@@ -295,7 +295,6 @@ GEM
     tzinfo-data (1.2019.3)
       tzinfo (>= 1.0.0)
     unicode-display_width (1.6.0)
-    wdm (0.1.1)
 
 PLATFORMS
   ruby
@@ -310,7 +309,6 @@ DEPENDENCIES
   jekyll-redirect-from
   jekyll-scholar
   tzinfo-data
-  wdm (~> 0.1.0)
 
 BUNDLED WITH
    1.17.2
